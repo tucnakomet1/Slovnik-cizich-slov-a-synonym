@@ -38,7 +38,7 @@ public class SecondFragment extends Fragment {
         // Clickable links
         binding.linkRepoTextView.setMovementMethod(LinkMovementMethod.getInstance());
         binding.linkProfileTextView.setMovementMethod(LinkMovementMethod.getInstance());
-        binding.linkIssuesTextView.setText(Html.fromHtml(issuesLink, Html.FROM_HTML_MODE_LEGACY));
+        binding.linkIssuesTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
         // Button "Back"
         binding.buttonSecond.setOnClickListener(view1 -> NavHostFragment.findNavController(SecondFragment.this)
