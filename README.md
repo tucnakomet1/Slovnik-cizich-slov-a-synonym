@@ -6,12 +6,14 @@
 
 # Slovník cizích slov a synonym
 
-<img align="left" src="img/az_icon.png" alt="Slovnik cizich slov a synonym logo" width="150">
+<img align="left" src="img/az_icon.png" alt="Slovnik cizich slov a synonym logo" width="130">
 
 
 Offline Android aplikace pro vyhledávání českých synonym a cizích slov.
 
 Aplikace vznikla z důvodu absence něčeho podobného. Data pochází čistě z ABZ [slovníku českých synonym](https://www.slovnik-synonym.cz/) a [slovníku cizích slov](https://slovnik-cizich-slov.abz.cz/) k datu 5. března 2026 a byla scrapována (nejedná se o oficiální aplikaci).
+
+<br>
 
 ## Funkce
 - Výsledky se zobrazují dynamicky okamžitě během psaní.
