@@ -1,4 +1,13 @@
-# Slovník cizích slov a synonym 📖
+<p align="center">
+  <a href="#Funkce">Funkce</a> •
+  <a href="#Instalace">Instalace</a>  •
+  <a href="#Snímky obrazovky">Snímky obrazovky</a>
+</p>
+
+# Slovník cizích slov a synonym
+
+<img align="left" src="img/az_icon.png" alt="Slovnik cizich slov a synonym logo" width="150">
+
 
 Offline Android aplikace pro vyhledávání českých synonym a cizích slov.
 
@@ -10,13 +19,7 @@ Aplikace vznikla z důvodu absence něčeho podobného. Data pochází čistě z
 - Data jsou integrovaná přímo v aplikaci v `.json` formátu, není nutné připojení k internetu.
 - Pokaždé, když vymažete vyhledávací pole, aplikace vám pro rozšíření obzorů nabídne nové náhodné slovíčko.
 
-## Snímky obrazovky
-
-| Náhodné slovo | Hledání konkrétního slova | Více výsledků pro dané slovo |
-| ------------| --- | ---- |
-| <img src="img/1.png" width="250"> | <img src="img/2.png" width="250"> | <img src="img/3.png" width="250"> |
-
-## Instalace a spuštění
+## Instalace
 
 Instalace `.apk` android souboru:
 
@@ -24,3 +27,9 @@ Instalace `.apk` android souboru:
 2. V nejnovější verzi si stáhněte soubor **`.apk`** (např. `Slovnik-v1.0.apk`).
 3. Otevřete stažený soubor a zvolte *Instalovat*. 
    *(Poznámka: Telefon vás možná požádá o povolení instalace z neznámých zdrojů, jelikož aplikace není stažena z Google Play).*
+
+## Snímky obrazovky
+
+| Náhodné slovo | Hledání konkrétního slova | Více výsledků pro dané slovo |
+| ------------| --- | ---- |
+| <img src="img/1.png" width="250"> | <img src="img/2.png" width="250"> | <img src="img/3.png" width="250"> |
