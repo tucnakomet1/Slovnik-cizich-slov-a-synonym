@@ -1,11 +1,14 @@
 package com.main.abz;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,8 +19,10 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +37,11 @@ public class FirstFragment extends Fragment {
     // Sorted by alphabet using TreeMap
     private final TreeMap<String, String> dictionary = new TreeMap<>();
 
+    // Favorite word
+    private SharedPreferences prefs;
+    private Set<String> favorites;
+    private boolean isShowingFavorites = false;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFirstBinding.inflate(inflater, container, false);
@@ -41,8 +51,20 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Load favorite words from memory
+        prefs = requireActivity().getSharedPreferences("SlovnikPrefs", Context.MODE_PRIVATE);
+        favorites = new HashSet<>(prefs.getStringSet("oblíbená_slova", new HashSet<>()));
+
         loadDictionary();   // Load dictionary from JSON file
         pickRandomWord();   // Pick random word on a start screen
+
+        // Button to show favorite words
+        binding.btnFavoritesList.setOnClickListener(v -> {
+            isShowingFavorites = true;
+            binding.searchView.setQuery("", false);
+            binding.randomWordCard.setVisibility(View.GONE);
+            showFavorites();
+        });
 
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -58,13 +80,17 @@ public class FirstFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 if (!newText.trim().isEmpty()) {
                     // We hide the random word
+                    isShowingFavorites = false;
                     binding.randomWordCard.setVisibility(View.GONE);
                     searchWord(newText.trim().toLowerCase());
                 } else {
                     // We show the random word again
-                    pickRandomWord();
-                    binding.randomWordCard.setVisibility(View.VISIBLE);
-                    binding.resultCard.setVisibility(View.GONE);
+                    if (!isShowingFavorites) {
+                        binding.resultsContainer.removeAllViews();
+                        binding.resultCard.setVisibility(View.GONE);
+                        pickRandomWord();
+                        binding.randomWordCard.setVisibility(View.VISIBLE);
+                    }
                 }
                 return true;
             }
@@ -129,39 +155,80 @@ public class FirstFragment extends Fragment {
 
     // Search for word in the dictionary
     private void searchWord(String query) {
-        StringBuilder resultsBuilder = new StringBuilder();
+        binding.resultsContainer.removeAllViews(); // Delete old results
         int count = 0;
 
-        // We go through the entire dictionary and search for words BEGINNING with the specified text.
         for (Map.Entry<String, String> entry : dictionary.entrySet()) {
             String word = entry.getKey();
-
             if (word.startsWith(query)) {
-                String capitalizedWord = word.substring(0, 1).toUpperCase() + word.substring(1);
-                String synonyms = entry.getValue();
-
-                // The word is white and bold, synonyms are light gray.
-                resultsBuilder.append("<font color='#FFFFFF'><b>").append(capitalizedWord).append("</b></font><br>");
-                resultsBuilder.append("<font color='#CCCCCC'>").append(synonyms).append("</font><br><br>");
-
+                addWordToLayout(word, entry.getValue());
                 count++;
-
-                // We limit the results to the first 30 so that the application does not crash when entering, for example, only the letter "a."
-                if (count >= 30) {
-                    resultsBuilder.append("<i><font color='#999999'>... zobrazeno prvních 30 výsledků</font></i>");
-                    break;
-                }
+                if (count >= 30) break; // Max 30 results
             }
         }
 
-        if (count > 0) {
-            // Inserting HTML code into TextView
-            binding.resultsTextView.setText(Html.fromHtml(resultsBuilder.toString(), Html.FROM_HTML_MODE_LEGACY));
-            binding.resultCard.setVisibility(View.VISIBLE);
-        } else {
-            // If nothing was found
+        binding.resultCard.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
+    }
+
+    // Show favorite words
+    private void showFavorites() {
+        binding.resultsContainer.removeAllViews();
+
+        if (favorites.isEmpty()) {
+            Toast.makeText(getContext(), "Zatím nemáte žádná oblíbená slova.", Toast.LENGTH_SHORT).show();
             binding.resultCard.setVisibility(View.GONE);
+            return;
         }
+
+        for (String word : favorites) {
+            String synonyms = dictionary.get(word);
+            if (synonyms != null) {
+                addWordToLayout(word, synonyms);
+            }
+        }
+        binding.resultCard.setVisibility(View.VISIBLE);
+    }
+
+    // Helper to add one word into layer
+    private void addWordToLayout(String word, String synonyms) {
+        View itemView = getLayoutInflater().inflate(R.layout.item_word, binding.resultsContainer, false);
+
+        TextView wordTxt = itemView.findViewById(R.id.wordTextView);
+        TextView synTxt = itemView.findViewById(R.id.synonymsTextView);
+
+        android.widget.ImageView heartBtn = itemView.findViewById(R.id.heartButton);
+
+        String capitalizedWord = word.substring(0, 1).toUpperCase() + word.substring(1);
+        wordTxt.setText(capitalizedWord);
+        synTxt.setText(synonyms);
+
+        // Icon
+        if (favorites.contains(word)) {
+            heartBtn.setImageResource(R.drawable.ic_heart_filled);
+        } else {
+            heartBtn.setImageResource(R.drawable.ic_heart_outline);
+        }
+
+        // When clicking at heart
+        heartBtn.setOnClickListener(v -> {
+            if (favorites.contains(word)) {
+                favorites.remove(word);
+                heartBtn.setImageResource(R.drawable.ic_heart_outline);
+
+                // Remove word from screen
+                if (isShowingFavorites) {
+                    binding.resultsContainer.removeView(itemView);
+                    if (favorites.isEmpty()) binding.resultCard.setVisibility(View.GONE);
+                }
+            } else {
+                favorites.add(word);
+                heartBtn.setImageResource(R.drawable.ic_heart_filled);
+            }
+            // Save changes
+            prefs.edit().putStringSet("oblíbená_slova", new HashSet<>(favorites)).apply();
+        });
+
+        binding.resultsContainer.addView(itemView);
     }
 
     @Override

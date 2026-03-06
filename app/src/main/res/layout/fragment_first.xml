@@ -6,12 +6,29 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <SearchView
-        android:id="@+id/searchView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
-        android:queryHint="Hledat slovo..." />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:iconifiedByDefault="false"
+            android:queryHint="Hledat..." />
+
+        <ImageButton
+            android:id="@+id/btnFavoritesList"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_heart_filled"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/favorites_button" />
+    </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/randomWordCard"
@@ -67,13 +84,12 @@
             app:cardElevation="4dp"
             android:visibility="gone">
 
-            <TextView
-                android:id="@+id/resultsTextView"
+            <LinearLayout
+                android:id="@+id/resultsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:textSize="16sp"
-                android:lineSpacingExtra="4dp" />
+                android:orientation="vertical"
+                android:padding="8dp" />
 
         </androidx.cardview.widget.CardView>
     </ScrollView>

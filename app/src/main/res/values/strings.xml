@@ -47,11 +47,12 @@
     <string name="n_hodn_objev_ze_slovn_ku">✨ Náhodný objev ze slovníku</string>
     <string name="icon">Icon</string>
     <string name="description1">Slovník cizích slov a synonym</string>
-    <string name="version">Verze 1.0.0</string>
+    <string name="version">Verze 1.1</string>
     <string name="description2">Tato aplikace slouží k rychlému offline vyhledávání synonym a definic cizích slov.</string>
     <string name="description3">Aplikace je vyvíjena jako open-source, tedy s otevřeným zdrojovým kódem a níže jsou uvedeny odkazy.</string>
-    <string name="git1">Odkazy na GitHub</string>
+    <string name="git1">Odkazy a GitHub</string>
     <string name="git2">Použité technologie a knihovny</string>
     <string name="libraries1">• AndroidX (Core, AppCompat, Navigation)\n• Material Design Components\n• Sloučená databáze synonym a cizích slov (JSON)</string>
     <string name="button_back">Zpět na vyhledávání</string>
+    <string name="favorites_button">Favorites button</string>
 </resources>

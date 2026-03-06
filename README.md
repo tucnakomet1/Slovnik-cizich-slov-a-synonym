@@ -20,13 +20,14 @@ Aplikace vznikla z důvodu absence něčeho podobného. Data pochází čistě z
 - Aplikace hledá jak synonyma pro česká slova, tak i překlady/definice slov cizího původu.
 - Data jsou integrovaná přímo v aplikaci v `.json` formátu, není nutné připojení k internetu.
 - Pokaždé, když vymažete vyhledávací pole, aplikace vám pro rozšíření obzorů nabídne nové náhodné slovíčko.
+- Aplikace umožňuje ukládat si oblíbená slova. Pro jejich zobrazení stačí kliknout vedle vyhledávacího pole na ikonku srdíčka `♥`
 
 ## Instalace
 
 Instalace `.apk` android souboru:
 
 1. Přejděte do sekce **[Releases](https://github.com/tucnakomet1/Slovnik-cizich-slov-a-synonym/releases)** v tomto repozitáři.
-2. V nejnovější verzi si stáhněte soubor **`.apk`** (např. `Slovnik-v1.0.apk`).
+2. V nejnovější verzi si stáhněte soubor **`.apk`** (např. `Slovnik-cizich-slov-a-synonym-v.1.1.apk`).
 3. Otevřete stažený soubor a zvolte *Instalovat*. 
    *(Poznámka: Telefon vás možná požádá o povolení instalace z neznámých zdrojů, jelikož aplikace není stažena z Google Play).*
 
@@ -34,4 +35,4 @@ Instalace `.apk` android souboru:
 
 | Náhodné slovo | Hledání konkrétního slova | Více výsledků pro dané slovo |
 | ------------| --- | ---- |
-| <img src="img/1.png" width="250"> | <img src="img/2.png" width="250"> | <img src="img/3.png" width="250"> |
+| <img src="img/rand_word.png" width="250"> | <img src="img/results.png" width="250"> | <img src="img/favorites.png" width="250"> |
